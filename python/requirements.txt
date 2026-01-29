@@ -1,0 +1,32 @@
+# Trading Performance Analytics - Python Dependencies
+
+# Data manipulation
+pandas>=2.0.0
+numpy>=1.24.0
+openpyxl>=3.1.0  # For Excel file handling
+
+# Statistical analysis
+scipy>=1.10.0
+scikit-learn>=1.3.0
+statsmodels>=0.14.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# Database connectivity
+sqlalchemy>=2.0.0
+pymysql>=1.1.0
+psycopg2-binary>=2.9.0  # PostgreSQL
+pyodbc>=4.0.0  # SQL Server
+
+# Jupyter support (optional, for notebooks)
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Data quality
+great-expectations>=0.17.0  # Optional: data validation
+
+# Performance monitoring
+tqdm>=4.65.0  # Progress bars
