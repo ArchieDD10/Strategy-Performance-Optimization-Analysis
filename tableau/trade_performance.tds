@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- Trading Performance Analytics - Tableau Data Source -->
+<datasource formatted-name='trade_performance' version='10.0' 
+            xmlns:user='http://www.tableausoftware.com/xml/user'>
+  
+  <!-- Connection to CSV Files -->
+  <connection class='textscan' directory='../data/raw' filename='trade_log.csv' 
+              server='' port=''>
+    <relation name='trade_log.csv' table='[trade_log#csv]' type='table'>
+      <columns>
+        <column datatype='integer' name='Trade_ID' ordinal='0' />
+        <column datatype='date' name='Date' ordinal='1' />
+        <column datatype='string' name='Time' ordinal='2' />
+        <column datatype='string' name='Instrument' ordinal='3' />
+        <column datatype='string' name='Setup_Type' ordinal='4' />
+        <column datatype='string' name='Session' ordinal='5' />
+        <column datatype='real' name='Risk_Reward_Ratio' ordinal='6' />
+        <column datatype='real' name='Risk_Amount' ordinal='7' />
+        <column datatype='string' name='Win_Loss' ordinal='8' />
+        <column datatype='real' name='PnL' ordinal='9' />
+        <column datatype='real' name='Balance' ordinal='10' />
+        <column datatype='real' name='Peak_Balance' ordinal='11' />
+        <column datatype='real' name='Drawdown_Pct' ordinal='12' />
+        <column datatype='string' name='Day_of_Week' ordinal='13' />
+        <column datatype='string' name='Month' ordinal='14' />
+        <column datatype='integer' name='Year' ordinal='15' />
+        <column datatype='integer' name='Quarter' ordinal='16' />
+        <column datatype='integer' name='Hour' ordinal='17' />
+      </columns>
+    </relation>
+  </connection>
+
+  <!-- Calculated Fields -->
+  <column caption='Cumulative P&amp;L' datatype='real' name='[Cumulative_PnL]'>
+    <calculation class='tableau' formula='RUNNING_SUM(SUM([PnL]))' />
+  </column>
+
+  <column caption='Win Rate %' datatype='real' name='[Win_Rate_Pct]'>
+    <calculation class='tableau' 
+                formula='SUM(IF [Win_Loss] = "Win" THEN 1 ELSE 0 END) / COUNT([Trade_ID]) * 100' />
+  </column>
+
+  <column caption='Profit Factor' datatype='real' name='[Profit_Factor]'>
+    <calculation class='tableau' 
+                formula='ABS(SUM(IF [Win_Loss] = "Win" THEN [PnL] END) / SUM(IF [Win_Loss] = "Loss" THEN [PnL] END))' />
+  </column>
+
+  <column caption='Average Win' datatype='real' name='[Avg_Win]'>
+    <calculation class='tableau' 
+                formula='AVG(IF [Win_Loss] = "Win" THEN [PnL] END)' />
+  </column>
+
+  <column caption='Average Loss' datatype='real' name='[Avg_Loss]'>
+    <calculation class='tableau' 
+                formula='AVG(IF [Win_Loss] = "Loss" THEN [PnL] END)' />
+  </column>
+
+  <column caption='Risk-Adjusted Return' datatype='real' name='[Risk_Adj_Return]'>
+    <calculation class='tableau' 
+                formula='AVG([PnL]) / STDEV([PnL])' />
+  </column>
+
+  <column caption='Is Profitable' datatype='boolean' name='[Is_Profitable]'>
+    <calculation class='tableau' formula='[PnL] > 0' />
+  </column>
+
+  <!-- Folders for Organization -->
+  <folder name='Performance Metrics' role='measures'>
+    <folder-item name='[Cumulative_PnL]' type='field' />
+    <folder-item name='[Win_Rate_Pct]' type='field' />
+    <folder-item name='[Profit_Factor]' type='field' />
+    <folder-item name='[Avg_Win]' type='field' />
+    <folder-item name='[Avg_Loss]' type='field' />
+    <folder-item name='[Risk_Adj_Return]' type='field' />
+  </folder>
+
+  <folder name='Trade Details' role='dimensions'>
+    <folder-item name='[Instrument]' type='field' />
+    <folder-item name='[Setup_Type]' type='field' />
+    <folder-item name='[Session]' type='field' />
+    <folder-item name='[Win_Loss]' type='field' />
+  </folder>
+
+  <folder name='Time Dimensions' role='dimensions'>
+    <folder-item name='[Date]' type='field' />
+    <folder-item name='[Day_of_Week]' type='field' />
+    <folder-item name='[Month]' type='field' />
+    <folder-item name='[Year]' type='field' />
+    <folder-item name='[Quarter]' type='field' />
+    <folder-item name='[Hour]' type='field' />
+  </folder>
+
+</datasource>
