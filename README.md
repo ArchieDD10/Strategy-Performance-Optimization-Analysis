@@ -429,9 +429,9 @@ Contributions are welcome! Areas for enhancement:
 ## 📧 Contact
 
 **Your Name**  
-📧 your.email@example.com  
-💼 [LinkedIn](https://linkedin.com/in/yourprofile)  
-🐙 [GitHub](https://github.com/yourusername)
+📧 adeguzmanard@aol.com
+💼 [LinkedIn](https://www.linkedin.com/in/archie-deguzman/)  
+🐙 [GitHub](https://github.com/ArchieDD10)
 
 ---
 
